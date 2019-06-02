@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as getHelloContract from './contract/get-hello.json';
+import { Response as HelloGetResponse } from './contract/get-hello.js';
 
 @Component({
   selector: 'app-root',
@@ -21,14 +22,10 @@ export class AppComponent implements OnInit {
   
   ngOnInit() {
     const url = `http://localhost:8080${getHelloContract.path}`;
-    this.http.request<helloResponse>(getHelloContract.method, url).forEach(res => {
+    this.http.request<HelloGetResponse>(getHelloContract.method, url).forEach(res => {
       this.response = res.msg;
       console.log('res', res);
       this.ready = true;
     });
   }
-}
-
-interface helloResponse {
-  msg: string;
 }
